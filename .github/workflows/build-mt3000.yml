@@ -78,9 +78,9 @@ jobs:
         ./scripts/feeds install -a -f -p PWluci
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/libcryptopp package/libcryptopp
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/adbyby package/adbyby
-        wget 'https://github.com/201821143044/Actions-GL.iNet-OpenWrt/raw/main/myfiles/mt3000.zip' --no-check-certificate && unzip -o mt3000.zip && rm -f mt3000.zip
-        #svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/e2guardian package/network/services/e2guardian
-        #svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/noddos package/network/services/noddos
+        #wget 'https://github.com/201821143044/Actions-GL.iNet-OpenWrt/raw/main/myfiles/mt3000.zip' --no-check-certificate && unzip -o mt3000.zip && rm -f mt3000.zip
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/e2guardian package/network/services/e2guardian
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/noddos package/network/services/noddos
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ps3netsrv package/ps3netsrv
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vsftpd-alt package/vsftpd-alt
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/wol package/wol
