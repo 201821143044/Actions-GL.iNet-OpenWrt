@@ -52,7 +52,7 @@ jobs:
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
         git clone https://github.com/gl-inet/gl-infra-builder.git && cd gl-infra-builder
-        git checkout v4.2.0_release3
+        # git checkout v4.2.0_release3
         python3 setup.py -c configs/config-wlan-ap.yml && cd wlan-ap/openwrt
         ./scripts/gen_config.py target_wlan_ap-gl-axt1800 luci
         echo "源码抓取完毕"
