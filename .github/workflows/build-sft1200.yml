@@ -91,6 +91,7 @@ jobs:
         # svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
         # wget -P include https://raw.githubusercontent.com/coolsnowwolf/lede/master/include/openssl-engine.mk
         echo "openssl更新完毕"
+        wget https://gitee.com/raymondqu/openwrt_lede_dl/raw/master/board-2.bin.ddcec9efd245da9365c474f513a855a55f3ac7fe -P /workdir/openwrt/openwrt-18.06/siflower/openwrt-18.06/dl/
         rm -rf .config
         echo "删除配置完毕"
         wget https://github.com/201821143044/Actions-GL.iNet-OpenWrt/raw/main/sft1200/.config
