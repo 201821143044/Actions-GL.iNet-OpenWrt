@@ -49,7 +49,7 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git clone https://github.com/201821143044/gl-infra-builder.git && cd gl-infra-builder
+        git clone https://github.com/gl-zhaojianhui/gl-infra-builder.git && cd gl-infra-builder
         echo "源码抓取完毕"
         python3 setup.py -c ./configs/config-siflower-18.x.yml && cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200 luci
