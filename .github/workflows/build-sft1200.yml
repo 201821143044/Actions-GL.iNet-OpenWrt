@@ -58,40 +58,44 @@ jobs:
         python3 setup.py -c ./configs/config-siflower-18.x.yml && cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200 luci
         sed -i "/helloworld/d" "feeds.conf.default"
-        echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
+        echo "src-git helloworld https://github.com/fw876/helloworld.git;main" >> "feeds.conf.default"
         echo "helloworld完毕"
         ./scripts/feeds update helloworld
         ./scripts/feeds install -a -f -p helloworld
         echo "src-git gl https://github.com/gl-inet/gl-feeds.git;18.06" >> "feeds.conf.default"
         echo "src-git luci2 https://github.com/coolsnowwolf/luci" >> "feeds.conf.default"
         echo "src-git packages2 https://github.com/coolsnowwolf/packages" >> "feeds.conf.default"
-        echo "src-git PWpackages https://github.com/xiaorouji/openwrt-passwall.git;packages" >> "feeds.conf.default"
-        echo "src-git PWluci https://github.com/xiaorouji/openwrt-passwall.git;luci" >> "feeds.conf.default"
+        echo "src-git PWpackages https://github.com/xiaorouji/openwrt-passwall-packages.git;main" >> "feeds.conf.default"
+        echo "src-git PWluci https://github.com/xiaorouji/openwrt-passwall.git;main" >> "feeds.conf.default"
         ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         echo "feeds更新完毕"
-        svn co https://github.com/coolsnowwolf/lede/trunk/tools/ninja tools/ninja
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/adbyby package/adbyby
+        git clone https://github.com/coolsnowwolf/lede.git temp_lede
+        cp -r temp_lede/tools/ninja tools/
+        cp -r temp_lede/package/lean/adbyby package/
+        rm -rf temp_lede
         rm -rf feeds/packages/net/zerotier
-        svn co https://github.com/coolsnowwolf/packages/trunk/net/zerotier feeds/packages/net/zerotier
-        rm -rf feeds/packages2/multimedia/aliyundrive-webdav
-        svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav feeds/packages2/multimedia/aliyundrive-webdav
+        git clone https://github.com/coolsnowwolf/packages.git temp_packages
+        cp -r temp_packages/net/zerotier feeds/packages/net/
+        rm -rf temp_packagesrm -rf feeds/packages2/multimedia/aliyundrive-webdav
         rm -rf feeds/luci2/applications/luci-app-aliyundrive-webdav
-        svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav feeds/luci2/applications/luci-app-aliyundrive-webdav
+        git clone https://github.com/messense/aliyundrive-webdav.git temp_aliyundrive-webdav
+        cp -r temp_aliyundrive-webdav/openwrt/aliyundrive-webdav feeds/packages2/multimedia/
+        cp -r temp_aliyundrive-webdav/openwrt/luci-app-aliyundrive-webdav feeds/luci2/applications/
+        rm -rf temp_aliyundrive-webdav
         wget https://gitee.com/raymondqu/openwrt_lede_dl/raw/master/board-2.bin.ddcec9efd245da9365c474f513a855a55f3ac7fe -P /home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/dl/
         echo "app更新完毕"
         rm -rf feeds/packages/lang/golang
         rm -rf feeds/packages2/lang/golang
-        svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
-        svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages2/lang/golang
+        git clone https://github.com/openwrt/packages.git --branch openwrt-22.03 --single-branch temp_golang
+        cp -r temp_golang/lang/golang feeds/packages/lang/golang
+        cp -r temp_golang/lang/golang feeds/packages2/lang/golang
+        rm -rf temp_golang
         echo "golang新版更新完毕"
         rm -rf package/libs/openssl
         wget 'https://github.com/201821143044/Actions-GL.iNet-OpenWrt/raw/main/myfiles/openssl.zip' --no-check-certificate && unzip -o openssl.zip && rm -f openssl.zip
-        # svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
-        # wget -P include https://raw.githubusercontent.com/coolsnowwolf/lede/master/include/openssl-engine.mk
         echo "openssl更新完毕"
-        # wget https://gitee.com/raymondqu/openwrt_lede_dl/raw/master/board-2.bin.ddcec9efd245da9365c474f513a855a55f3ac7fe -P /workdir/openwrt/openwrt-18.06/siflower/openwrt-18.06/dl/
         rm -rf .config
         echo "删除配置完毕"
         wget https://github.com/201821143044/Actions-GL.iNet-OpenWrt/raw/main/sft1200/.config
