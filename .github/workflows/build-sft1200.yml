@@ -53,7 +53,7 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git clone https://github.com/201821143044/gl-infra-builder-new.git && cd gl-infra-builder
+        git clone https://github.com/201821143044/gl-infra-builder-new.git && cd gl-infra-builder-new
         echo "源码抓取完毕"
         python3 setup.py -c ./configs/config-siflower-18.x.yml && cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200 luci
@@ -84,7 +84,7 @@ jobs:
         cp -r temp_aliyundrive-webdav/openwrt/aliyundrive-webdav feeds/packages2/multimedia/
         cp -r temp_aliyundrive-webdav/openwrt/luci-app-aliyundrive-webdav feeds/luci2/applications/
         rm -rf temp_aliyundrive-webdav
-        wget https://gitee.com/raymondqu/openwrt_lede_dl/raw/master/board-2.bin.ddcec9efd245da9365c474f513a855a55f3ac7fe -P /home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/dl/
+        wget https://gitee.com/raymondqu/openwrt_lede_dl/raw/master/board-2.bin.ddcec9efd245da9365c474f513a855a55f3ac7fe -P /home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder-new/openwrt-18.06/siflower/openwrt-18.06/dl/
         echo "app更新完毕"
         rm -rf feeds/packages/lang/golang
         rm -rf feeds/packages2/lang/golang
@@ -116,13 +116,13 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin
+        path: gl-infra-builder-new/openwrt-18.06/siflower/openwrt-18.06/bin
 
     - name: Organize files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd "/home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/"
+        cd "/home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder-new/openwrt-18.06/siflower/openwrt-18.06/bin/"
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
     - name: Upload firmware directory
@@ -147,7 +147,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: /home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/targets/siflower/openwrt-*squashfs*
+        files: /home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder-new/openwrt-18.06/siflower/openwrt-18.06/bin/targets/siflower/openwrt-*squashfs*
 
     - name: Delete workflow runs
       uses: wekingchen/delete-workflow-runs@main
